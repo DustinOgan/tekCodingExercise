@@ -1,4 +1,4 @@
-const isValid = require('../dustin.js').isValid;
+const isValidInput = require('../dustin.js').isValidInput;
 const fillStateMaps = require('../dustin.js').fillStateMaps;
 var expect = require('chakram').expect;
 
@@ -38,26 +38,26 @@ describe ('The state lookup program', function(){
         stateMaps = fillStateMaps(stateArray)
     });
 
-    describe('for method isValid ', function(){
+    describe('for method isValidInput ', function(){
 
         it('should return false for data less than 2 characters', function(){
-            expect(isValid('i', null)).to.be.false;
+            expect(isValidInput('i', null)).to.be.false;
         });
         it('should return false for numeric data ', function() {
-            expect(isValid('1', null)).to.be.false;
+            expect(isValidInput('1', null)).to.be.false;
         });
         it('should return false when an otherwise valid 2 letter code is not found', function(){
-            expect(isValid('zo',stateMaps)).to.be.false;
+            expect(isValidInput('zo',stateMaps)).to.be.false;
         });
         it('should return false when an otherwise valid 2 letter code is not found', function(){
-            expect(isValid('florida',stateMaps)).to.be.false;
+            expect(isValidInput('florida',stateMaps)).to.be.false;
         });
 
         it('should return true for known valid input found in the state names map', function(){
-            expect(isValid('alabama',stateMaps)).to.be.true;
+            expect(isValidInput('alabama',stateMaps)).to.be.true;
         })
         it('should return true for known valid input found in the state abbreviation map', function(){
-            expect(isValid('al',stateMaps)).to.be.true;
+            expect(isValidInput('al',stateMaps)).to.be.true;
         })
 
     });

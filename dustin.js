@@ -10,8 +10,7 @@ async function dustinMain() {
     let stateMapByName = new Map();
     const response = await request.get('http://services.groupkt.com/state/get/USA/all');
     let stateArray =  response.body.RestResponse.result;
-    let stateMaps = await fillStateMaps(stateArray);
-
+    let stateMaps =  fillStateMaps(stateArray);
     rl.setPrompt('Please Enter a State or State Code For Lookup:>  ');
     rl.clearLine();
     rl.prompt();
@@ -25,9 +24,9 @@ async function dustinMain() {
             default:
                 let returnedStates;
                 let stateRequested = line.trim();
-                if(isValid(stateRequested, stateMaps)){
-                    console.log('You entered `' + stateRequested + '`');
-                    if(stateRequested.length == 2){
+                if(isValidInput(stateRequested, stateMaps)){
+                    console.log('You entered ' + stateRequested );
+                    if(isStateAbbreviation(stateRequested)){
                          returnedStates = stateMaps.abbrMap;
                     }else{
                          returnedStates = stateMaps.nameMap;
@@ -46,6 +45,9 @@ async function dustinMain() {
 
 }
 
+function isStateAbbreviation(input) {
+    return input.length == 2;
+}
 
 function fillStateMaps(sArray) {
     let sMapByAbbr = new Map();
@@ -57,7 +59,7 @@ function fillStateMaps(sArray) {
     return { 'nameMap': sMapByName, 'abbrMap': sMapByAbbr };
 };
 
-function isValid(input, stateMaps) {
+function isValidInput(input, stateMaps) {
     var hasNumber = /\d/;
     if (hasNumber.test(input)) {
         console.log('This request contains numbers, please try a different lookup');
@@ -89,5 +91,5 @@ function isValid(input, stateMaps) {
 
 module.exports = {
     fillStateMaps,
-    isValid
+    isValidInput
 }
