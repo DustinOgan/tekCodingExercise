@@ -9,7 +9,7 @@ dustinMain();
 async function dustinMain() {
     let stateMapByName = new Map();
     const response = await request.get('http://services.groupkt.com/state/get/USA/all');
-    let stateArray = await response.body.RestResponse.result;
+    let stateArray =  response.body.RestResponse.result;
     let stateMaps = await fillStateMaps(stateArray);
 
     rl.setPrompt('Please Enter a State or State Code For Lookup:>  ');
@@ -31,8 +31,8 @@ async function dustinMain() {
                     }else{
                          returnedStates = stateMaps.nameMap;
                     }
-                    console.log('The state capital for queried state is  : ' + returnedStates.get(stateRequested).capital);
-                    console.log('The largest city for the queried state is : ' + returnedStates.get(stateRequested).largest_city) ;
+                    console.log('The state capital for queried state is  : ' + returnedStates.get(stateRequested.toLowerCase()).capital);
+                    console.log('The largest city for the queried state is : ' + returnedStates.get(stateRequested.toLowerCase()).largest_city) ;
 
                 }
                 break;
@@ -66,14 +66,14 @@ function isValid(input, stateMaps) {
         return false;
     };
     if (input.length == 2) {
-        if (!stateMaps.abbrMap.has(input)) {
+        if (!stateMaps.abbrMap.has(input.toLowerCase())) {
             console.log('This 2 letter code was not found amongs the valid state abbreviations list');
             console.log('Please try a different state code');
             return false;
         }
     };
     if (input.length > 2) {
-        if (!stateMaps.nameMap.has(input)) {
+        if (!stateMaps.nameMap.has(input.toLowerCase())) {
             console.log('This name code was not found in the valid state names list');
             console.log('Please try a different state name');
             return false;
