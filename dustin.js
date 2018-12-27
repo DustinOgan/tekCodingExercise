@@ -18,8 +18,9 @@ async function dustinMain() {
 
     rl.on('line', function (line) {
         switch (line.trim()) {
-            case 'hello':
-                console.log('world!');
+            case '?':
+                console.log('Enter a state name (example: Alabama)');
+                console.log('Or enter a state abbreviation (example; AL)');
                 break;
             default:
                 let returnedStates;
@@ -44,6 +45,7 @@ async function dustinMain() {
     });
 
 }
+
 
 function fillStateMaps(sArray) {
     let sMapByAbbr = new Map();
