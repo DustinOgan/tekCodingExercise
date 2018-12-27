@@ -1,5 +1,8 @@
 const isValidInput = require('../dustin.js').isValidInput;
 const fillStateMaps = require('../dustin.js').fillStateMaps;
+const getStateCapital = require('../dustin.js').getStateCapital;
+const getLargestCity = require('../dustin.js').getLargestCity;
+const isStateAbbreviation = require('../dustin.js').isStateAbbreviation;
 var expect = require('chakram').expect;
 
 
@@ -72,5 +75,42 @@ describe ('The state lookup program', function(){
             expect(stateMaps.nameMap.get('alabama').capital).to.equal('Montgomery');
          });
     });
+    describe('method getStateCapital', function(){
+        it('should expect both capital and lowercase abbreviations', function(){
+            expect(getStateCapital(stateMaps.abbrMap, 'AL')).to.equal('Montgomery');
+            expect(getStateCapital(stateMaps.abbrMap, 'al')).to.equal('Montgomery');
+            expect(getStateCapital(stateMaps.abbrMap, 'aL')).to.equal('Montgomery');
+         });
+         it('should expect both capital and lowercase state names', function(){
+            expect(getStateCapital(stateMaps.nameMap, 'alabama')).to.equal('Montgomery');
+            expect(getStateCapital(stateMaps.nameMap, 'ALABAMA')).to.equal('Montgomery');
+            expect(getStateCapital(stateMaps.nameMap, 'aLaBaMa')).to.equal('Montgomery');
+         });
+    });
+    describe('method getLargestCity', function(){
+        it('should expect both capital and lowercase abbreviations', function(){
+            expect(getLargestCity(stateMaps.abbrMap, 'AL')).to.equal('Birmingham');
+            expect(getLargestCity(stateMaps.abbrMap, 'al')).to.equal('Birmingham');
+            expect(getLargestCity(stateMaps.abbrMap, 'aL')).to.equal('Birmingham');
+         });
+         it('should expect both capital and lowercase state names', function(){
+            expect(getLargestCity(stateMaps.nameMap, 'alabama')).to.equal('Birmingham');
+            expect(getLargestCity(stateMaps.nameMap, 'ALABAMA')).to.equal('Birmingham');
+            expect(getLargestCity(stateMaps.nameMap, 'aLaBaMa')).to.equal('Birmingham');
+         });
+    });
+    describe('method isStateAbbreviation', function(){
+        it('should return true for any 2 letter code', function(){
+            expect(isStateAbbreviation('AL')).to.be.true;
+         });
+         it('should return false for any 3 letter code', function(){
+            expect(isStateAbbreviation('ALS')).to.be.false;
+         });
+         it('should return false for any 1 letter code', function(){
+            expect(isStateAbbreviation('A')).to.be.false;
+         });
+        
+    });
+    
 
 });

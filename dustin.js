@@ -31,8 +31,9 @@ async function dustinMain() {
                     }else{
                          returnedStates = stateMaps.nameMap;
                     }
-                    console.log('The state capital for queried state is  : ' + returnedStates.get(stateRequested.toLowerCase()).capital);
-                    console.log('The largest city for the queried state is : ' + returnedStates.get(stateRequested.toLowerCase()).largest_city) ;
+                    
+                    console.log('The state capital for queried state is  : ' + getStateCapital(returnedStates,stateRequested));
+                    console.log('The largest city for the queried state is : ' + getLargestCity(returnedStates,stateRequested));
 
                 }
                 break;
@@ -43,6 +44,14 @@ async function dustinMain() {
         process.exit(0);
     });
 
+}
+
+function getStateCapital(states, stateRequested){
+    return states.get(stateRequested.toLowerCase()).capital;
+}
+
+function getLargestCity(states, stateRequested){
+    return states.get(stateRequested.toLowerCase()).largest_city;
 }
 
 function isStateAbbreviation(input) {
@@ -91,5 +100,9 @@ function isValidInput(input, stateMaps) {
 
 module.exports = {
     fillStateMaps,
-    isValidInput
+    isValidInput,
+    getStateCapital,
+    getLargestCity,
+    isStateAbbreviation
+
 }
